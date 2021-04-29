@@ -12,7 +12,7 @@ $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
     <p><a href="index.php">topic</a></p>
     <table border="1">
       <tr>
-        <td>Id</td><td>Name</td><td>Profile</td><td></td>
+        <td>Id</td><td>Name</td><td>Profile</td><td>Update</td><td>Delete</td>
         <?php
         $sql = "SELECT * FROM author";
         $result = mysqli_query($conn, $sql);
@@ -28,6 +28,12 @@ $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
             <td><?= $filtered['name'] ?></td>
             <td><?= $filtered['profile'] ?></td>
             <td><a href="author.php?id=<?= $filtered['id'] ?>">update</a></td>
+            <td>
+              <form action="process_delete_author.php" method="post" onsubmit="if(!confirm('sure?')){return false;}">
+                <input type="hidden" name="id" value="<?= $filtered['id'] ?>">
+                <input type="submit" value="delete">
+              </form>
+            </td>
           </tr>
           <?php
         }
