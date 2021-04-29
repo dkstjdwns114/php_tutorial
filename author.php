@@ -12,7 +12,7 @@ $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
     <p><a href="index.php">topic</a></p>
     <table border="1">
       <tr>
-        <td>Id</td><td>Name</td><td>Profile</td>
+        <td>Id</td><td>Name</td><td>Profile</td><td></td>
         <?php
         $sql = "SELECT * FROM author";
         $result = mysqli_query($conn, $sql);
@@ -27,16 +27,39 @@ $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
             <td><?= $filtered['id'] ?></td>
             <td><?= $filtered['name'] ?></td>
             <td><?= $filtered['profile'] ?></td>
+            <td><a href="author.php?id=<?= $filtered['id'] ?>">update</a></td>
           </tr>
           <?php
         }
         ?>
       </tr>
     </table>
-    <form action="process_create_author.php" method="post">
-      <p><input type="text" name="name" placeholder="Name"></p>
-      <p><textarea name="profile" rows="5" cols="30" placeholder="Profile"></textarea></p>
-      <input type="submit" value="Create author">
+    <?php
+    $escaped = array(
+      'name' => '',
+      'profile' => ''
+    );
+    $label_submit = 'Create author';
+    $form_action = 'process_create_author.php';
+    $form_id = '';
+    if(isset($_GET['id'])){
+      $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
+      settype($filtered_id, 'integer');
+      $sql = "SELECT * FROM author WHERE id = {$filtered_id}";
+      $result = mysqli_query($conn, $sql);
+      $row = mysqli_fetch_array($result);
+      $escaped['name'] = htmlspecialchars($row['name']);
+      $escaped['profile'] = htmlspecialchars($row['profile']);
+      $label_submit = 'Update author';
+      $form_action = 'process_update_author.php';
+      $form_id = '<input type="hidden" name="id" value="'.$_GET['id'].'">';
+    }
+    ?>
+    <form action="<?= $form_action ?>" method="post">
+      <?= $form_id ?>
+      <p><input type="text" name="name" placeholder="Name" value="<?= $escaped['name'] ?>"></p>
+      <p><textarea name="profile" rows="5" cols="30" placeholder="Profile"><?= $escaped['profile'] ?></textarea></p>
+      <input type="submit" value="<?= $label_submit ?>">
     </form>
   </body>
 </html>
