@@ -9,8 +9,8 @@ $filtered = array(
 $sql = "
   INSERT INTO topic (title, description, created)
   VALUES(
-    '{$_POST['title']}',
-    '{$_POST['description']}',
+    '{$filtered["title"]}',
+    '{$filtered["description"]}',
     NOW()
   )
 ";
