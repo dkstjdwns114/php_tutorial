@@ -36,7 +36,8 @@ if(isset($_GET['id'])){
     <ol>
       <?= $list ?>
     </ol>
-    <form action="process_create.php" method="post">
+    <form action="process_update.php" method="post">
+      <input type="hidden" name="id" value="<?= $_GET['id'] ?>"
       <p><input type="text" name="title" placeholder="Title" value="<?= $article['title'] ?>"></p>
       <p><textarea name="description" placeholder="Description"><?= $article['description'] ?></textarea></p>
       <p><input type="submit"></p>
