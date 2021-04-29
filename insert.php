@@ -1,8 +1,8 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
 $sql = "
-  INSER INTO topic (title, description, created)
-  VALUE(
+  INSERT INTO topic (title, description, created)
+  VALUES(
     'MySQL',
     'MySQL is ...',
     NOW()
