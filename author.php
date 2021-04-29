@@ -33,5 +33,10 @@ $conn = mysqli_connect("localhost", "root", "1234", "opentutorials");
         ?>
       </tr>
     </table>
+    <form action="process_create_author.php" method="post">
+      <p><input type="text" name="name" placeholder="Name"></p>
+      <p><textarea name="profile" rows="5" cols="30" placeholder="Profile"></textarea></p>
+      <input type="submit" value="Create author">
+    </form>
   </body>
 </html>
